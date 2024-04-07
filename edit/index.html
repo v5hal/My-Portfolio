@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagination Example</title>
+<style>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        position: relative;
+    }
+    .project {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 8px;
+    }
+    .pagination {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .pagination .arrow-btn {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        border: none;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 20px;
+    }
+    .pagination .arrow-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+</style>
+</head>
+<body>
+
+<div class="container" id="container">
+    <div class="project">Project 1</div>
+    <div class="project">Project 2</div>
+    <div class="project">Project 3</div>
+    <div class="project">Project 4</div>
+    <div class="project">Project 5</div>
+    <div class="project">Project 6</div>
+    <div class="project">Project 7</div>
+    <!-- Add more projects as needed -->
+    <div class="pagination" id="pagination">
+        <button id="prevBtn" class="arrow-btn">&#9664;</button>
+        <button id="nextBtn" class="arrow-btn">&#9654;</button>
+    </div>
+</div>
+
+<script>
+    const projectsPerPage = 3;
+    let currentPage = 1;
+    const container = document.getElementById('container');
+    const projects = container.querySelectorAll('.project');
+    const totalPages = Math.ceil(projects.length / projectsPerPage);
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function showProjects(page) {
+        const startIndex = (page - 1) * projectsPerPage;
+        const endIndex = startIndex + projectsPerPage;
+
+        projects.forEach((project, index) => {
+            if (index >= startIndex && index < endIndex) {
+                project.style.display = 'block';
+            } else {
+                project.style.display = 'none';
+            }
+        });
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            showProjects(currentPage);
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            showProjects(currentPage);
+        }
+    }
+
+    prevBtn.addEventListener('click', prevPage);
+    nextBtn.addEventListener('click', nextPage);
+
+    showProjects(currentPage);
+</script>
+
+</body>
+</html>
